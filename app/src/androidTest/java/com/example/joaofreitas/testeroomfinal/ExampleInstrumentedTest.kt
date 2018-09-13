@@ -1,4 +1,4 @@
-package com.example.joaofreitas.testeroom
+package com.example.joaofreitas.testeroomfinal
 
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
 	fun useAppContext() {
 		// Context of the app under test.
 		val appContext = InstrumentationRegistry.getTargetContext()
-		assertEquals("com.example.joaofreitas.testeroom", appContext.packageName)
+		assertEquals("com.example.joaofreitas.testeroomfinal", appContext.packageName)
 	}
 }

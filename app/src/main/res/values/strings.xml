@@ -1,3 +1,7 @@
 <resources>
-	<string name="app_name">TesteRoom</string>
+	<string name="app_name">TesteRoomFinal</string>
+	<string name="fazer_pedido">FAZER PEDIDO</string>
+	<string name="input_nome">Nome</string>
+	<string name="input_valor">Valor</string>
+	<string name="botao_salvar_pedido">Salvar</string>
 </resources>

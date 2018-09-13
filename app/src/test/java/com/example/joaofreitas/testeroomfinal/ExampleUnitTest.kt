@@ -1,4 +1,4 @@
-package com.example.joaofreitas.testeroom
+package com.example.joaofreitas.testeroomfinal
 
 import org.junit.Test
 

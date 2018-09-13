@@ -4,30 +4,27 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	tools:context=".activity.ui.MainActivity">
-
-	<Button
-		android:id="@+id/main_fazer_pedido"
-		android:layout_width="0dp"
-		android:layout_height="wrap_content"
-		android:layout_margin="8dp"
-		android:text="FAZER PEDIDO"
-		app:layout_constraintBottom_toBottomOf="parent"
-		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toTopOf="parent"
-		app:layout_constraintVertical_bias="1.0"
-		tools:listItem="@layaout/pedido_item"/>
+	tools:context=".activity.ui.ListPedidoActivity">
 
 	<android.support.v7.widget.RecyclerView
-		android:id="@+id/main_recycler_view"
+		android:id="@+id/list_pedido_recycler_view"
 		android:layout_width="0dp"
 		android:layout_height="0dp"
 		android:layout_margin="8dp"
 		app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-		app:layout_constraintBottom_toTopOf="@+id/main_fazer_pedido"
+		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent"
 		tools:listitem="@layout/pedido_item" />
+
+	<android.support.design.widget.FloatingActionButton
+		android:id="@+id/list_pedido_add_pedido"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_margin="16dp"
+		android:src="@drawable/ic_action_add"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent" />
+
 </android.support.constraint.ConstraintLayout>
