@@ -1,22 +1,27 @@
-package com.example.joaofreitas.testeroomfinal.activity.ui
+package com.example.joaofreitas.testeroomfinal.views.activity.ui
 
 
-import com.example.joaofreitas.testeroomfinal.R
-import com.example.joaofreitas.testeroomfinal.activity.recyclerview.PedidoListAdapter
-import com.example.joaofreitas.testeroomfinal.dao.PedidoDao
-import com.example.joaofreitas.testeroomfinal.database.AppDatabase
-import com.example.joaofreitas.testeroomfinal.database.Database
 import android.arch.lifecycle.Observer
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import br.com.maximasistemas.arch.mvp.view.MvpListaView
+import br.com.maximasistemas.arch.mvp.view.activities.MvpListaActivity
+import com.example.joaofreitas.testeroomfinal.R
+import com.example.joaofreitas.testeroomfinal.dao.PedidoDao
+import com.example.joaofreitas.testeroomfinal.database.AppDatabase
+import com.example.joaofreitas.testeroomfinal.database.Database
 import com.example.joaofreitas.testeroomfinal.model.Pedido
+import com.example.joaofreitas.testeroomfinal.presenter.ListPresenter
+import com.example.joaofreitas.testeroomfinal.repository.PedidoRepository
+import com.example.joaofreitas.testeroomfinal.utilities.InjectorUtil
+import com.example.joaofreitas.testeroomfinal.views.activity.recyclerview.PedidoListAdapter
 import kotlinx.android.synthetic.main.activity_list_pedido.*
 
-class ListPedidoActivity : AppCompatActivity() {
-
+class ListPedidoActivity : MvpListaActivity<ListPedidoView, ListPresenter>() {
+	override fun obterClassePresenter(): Class<ListPresenter> = ListPresenter::class.java
+	//TODO aplicar injeção de depdência conforme projeto sunflower
 	private lateinit var pedidoDao: PedidoDao
-	private lateinit var adapter: PedidoListAdapter
+	private val pedidoRepository = InjectorUtil.getItemRepository()
 
 	companion object {
 		const val TITLE_APPBAR = "Pedido"
@@ -24,6 +29,7 @@ class ListPedidoActivity : AppCompatActivity() {
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
+
 		setContentView(R.layout.activity_list_pedido)
 		title = TITLE_APPBAR
 		val database: AppDatabase = Database.getInstance(this)
@@ -31,6 +37,7 @@ class ListPedidoActivity : AppCompatActivity() {
 		configuraRecyclerView()
 		configureLiveData()
 		configuraBotaoFazerPedido()
+		adapter = PedidoListAdapter()
 	}
 
 	private fun configureLiveData() {
@@ -43,7 +50,7 @@ class ListPedidoActivity : AppCompatActivity() {
 	}
 
 	private fun configuraRecyclerView() {
-		this.adapter = PedidoListAdapter(context = this) {
+		this.adapter = PedidoListAdapter() {
 			vaiParaDetalhesPedido(it)
 		}
 		list_pedido_recycler_view.adapter = adapter
@@ -61,4 +68,8 @@ class ListPedidoActivity : AppCompatActivity() {
 			startActivity(abreFormularioPedido)
 		}
 	}
+}
+
+interface ListPedidoView : MvpListaView {
+
 }

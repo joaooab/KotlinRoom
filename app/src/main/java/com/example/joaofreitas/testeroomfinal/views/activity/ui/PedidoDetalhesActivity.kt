@@ -1,4 +1,4 @@
-package com.example.joaofreitas.testeroomfinal.activity.ui
+package com.example.joaofreitas.testeroomfinal.views.activity.ui
 
 import android.arch.lifecycle.Observer
 import android.content.Intent
@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import com.example.joaofreitas.testeroomfinal.R
-import com.example.joaofreitas.testeroomfinal.activity.recyclerview.ItemListAdapter
+import com.example.joaofreitas.testeroomfinal.views.activity.recyclerview.ItemListAdapter
 import com.example.joaofreitas.testeroomfinal.dao.ItemDao
 import com.example.joaofreitas.testeroomfinal.database.Database
 import com.example.joaofreitas.testeroomfinal.model.Pedido

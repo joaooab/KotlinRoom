@@ -1,4 +1,4 @@
-package com.example.joaofreitas.testeroomfinal.activity.recyclerview
+package com.example.joaofreitas.testeroomfinal.views.activity.recyclerview
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView

@@ -3,7 +3,6 @@ package com.example.joaofreitas.testeroomfinal.database
 import android.arch.persistence.room.Database
 import android.arch.persistence.room.Room
 import android.arch.persistence.room.RoomDatabase
-import android.arch.persistence.room.migration.Migration
 import android.content.Context
 import com.example.joaofreitas.testeroomfinal.dao.ItemDao
 import com.example.joaofreitas.testeroomfinal.dao.PedidoDao
@@ -34,7 +33,7 @@ object Database {
 					AppDatabase::class.java,
 					"teste_room")
 					.fallbackToDestructiveMigration()
-					.addMigrations(Migration1To2())
+//					.addMigrations(Migration1To2())
 					.build()
 			return database
 		}

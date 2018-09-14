@@ -1,4 +1,4 @@
-package com.example.joaofreitas.testeroomfinal.activity.ui
+package com.example.joaofreitas.testeroomfinal.views.activity.ui
 
 import android.os.AsyncTask
 import android.os.Bundle
