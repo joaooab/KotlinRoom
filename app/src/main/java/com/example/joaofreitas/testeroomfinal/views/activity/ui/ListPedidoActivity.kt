@@ -14,7 +14,7 @@ import com.example.joaofreitas.testeroomfinal.utilities.InjectorUtil
 import com.example.joaofreitas.testeroomfinal.views.activity.recyclerview.PedidoListAdapter
 import kotlinx.android.synthetic.main.activity_list_pedido.*
 
-class ListPedidoActivity : MvpListaActivity<ListPedidoView, ListPedidoPresenter>() {
+class ListPedidoActivity : MvpListaActivity<ListPedidoView, ListPedidoPresenter>(), ListPedidoView {
 
 	override fun obterClassePresenter(): Class<ListPedidoPresenter> = ListPedidoPresenter::class.java
 
@@ -30,26 +30,18 @@ class ListPedidoActivity : MvpListaActivity<ListPedidoView, ListPedidoPresenter>
 		setContentView(R.layout.activity_list_pedido)
 		title = TITLE_APPBAR
 
-		parent
-		adapter = PedidoListAdapter { pedido -> vaiParaDetalhesPedido(pedido) }
-		configureLiveData(adapter as PedidoListAdapter)
+		adapter = PedidoListAdapter { pedido -> PedidoDetalhesActivity.startActivity(pedido,this) }
+		configureLiveData(pedidoRepository.obtemPedidos())
 		configuraBotaoFazerPedido()
 	}
 
-
-	private fun configureLiveData(adapter: PedidoListAdapter) {
-		val pedidosLiveData = pedidoRepository.obtemPedidos()
-		pedidosLiveData.observe(this, Observer { pedidos ->
+	private fun configureLiveData(liveData: LiveData<List<Pedido>>) {
+		val pedidoListAdapter = adapter as PedidoListAdapter
+		liveData.observe(this, Observer { pedidos ->
 			pedidos?.let {
-				adapter.alteraTodosPedidos(it)
+				pedidoListAdapter.alteraTodosPedidos(it)
 			}
 		})
-	}
-
-	private fun vaiParaDetalhesPedido(pedido: Pedido) {
-		val intentDetalhesPedido = Intent(this, PedidoDetalhesActivity::class.java)
-		intentDetalhesPedido.putExtra(CHAVE_PEDIDO, pedido)
-		startActivity(intentDetalhesPedido)
 	}
 
 	private fun configuraBotaoFazerPedido() {
@@ -61,5 +53,4 @@ class ListPedidoActivity : MvpListaActivity<ListPedidoView, ListPedidoPresenter>
 }
 
 interface ListPedidoView : MvpListaView {
-	fun exibirAlgumaCoisa()
 }

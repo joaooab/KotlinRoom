@@ -1,6 +1,7 @@
 package com.example.joaofreitas.testeroomfinal.views.activity.ui
 
 import android.arch.lifecycle.Observer
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -17,6 +18,14 @@ class PedidoDetalhesActivity : AppCompatActivity() {
 	private lateinit var itemDao: ItemDao
 	private lateinit var adapter: ItemListAdapter
 	private lateinit var pedido: Pedido
+
+	companion object {
+		fun startActivity(pedido: Pedido, context: Context) {
+			val intentDetalhesPedido = Intent(context, PedidoDetalhesActivity::class.java)
+			intentDetalhesPedido.putExtra(CHAVE_PEDIDO, pedido)
+			context.startActivity(intentDetalhesPedido)
+		}
+	}
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
