@@ -1,0 +1,201 @@
+Index: app/src/main/java/com/example/joaofreitas/testeroomfinal/activity/ui/ListPedidoActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.joaofreitas.testeroomfinal.activity.ui\n\n\nimport com.example.joaofreitas.testeroomfinal.R\nimport com.example.joaofreitas.testeroomfinal.activity.recyclerview.PedidoListAdapter\nimport com.example.joaofreitas.testeroomfinal.dao.PedidoDao\nimport com.example.joaofreitas.testeroomfinal.database.AppDatabase\nimport com.example.joaofreitas.testeroomfinal.database.Database\nimport android.arch.lifecycle.Observer\nimport android.content.Intent\nimport android.os.Bundle\nimport android.support.v7.app.AppCompatActivity\nimport com.example.joaofreitas.testeroomfinal.model.Pedido\nimport kotlinx.android.synthetic.main.activity_list_pedido.*\n\nclass ListPedidoActivity : AppCompatActivity() {\n\n\tprivate lateinit var pedidoDao: PedidoDao\n\tprivate lateinit var adapter: PedidoListAdapter\n\n\tcompanion object {\n\t\tconst val TITLE_APPBAR = \"Pedido\"\n\t}\n\n\toverride fun onCreate(savedInstanceState: Bundle?) {\n\t\tsuper.onCreate(savedInstanceState)\n\t\tsetContentView(R.layout.activity_list_pedido)\n\t\ttitle = TITLE_APPBAR\n\t\tval database: AppDatabase = Database.getInstance(this)\n\t\tpedidoDao = database.pedidoDao()\n\t\tconfiguraRecyclerView()\n\t\tconfigureLiveData()\n\t\tconfiguraBotaoFazerPedido()\n\t}\n\n\tprivate fun configureLiveData() {\n\t\tval pedidosLiveData = pedidoDao.all()\n\t\tpedidosLiveData.observe(this, Observer { pedidos ->\n\t\t\tpedidos?.let {\n\t\t\t\tadapter.alteraTodosPedidos(it)\n\t\t\t}\n\t\t})\n\t}\n\n\tprivate fun configuraRecyclerView() {\n\t\tthis.adapter = PedidoListAdapter(context = this) {\n\t\t\tvaiParaDetalhesPedido(it)\n\t\t}\n\t\tlist_pedido_recycler_view.adapter = adapter\n\t}\n\n\tprivate fun vaiParaDetalhesPedido(pedido: Pedido) {\n\t\tval intentDetalhesPedido = Intent(this, PedidoDetalhesActivity::class.java)\n\t\tintentDetalhesPedido.putExtra(CHAVE_PEDIDO, pedido)\n\t\tstartActivity(intentDetalhesPedido)\n\t}\n\n\tprivate fun configuraBotaoFazerPedido() {\n\t\tlist_pedido_add_pedido.setOnClickListener {\n\t\t\tval abreFormularioPedido = Intent(this, FormularioPedidoActivity::class.java)\n\t\t\tstartActivity(abreFormularioPedido)\n\t\t}\n\t}\n}\n
+===================================================================
+--- app/src/main/java/com/example/joaofreitas/testeroomfinal/activity/ui/ListPedidoActivity.kt	(revision b940132594ed3c731ccc9575eaced96e885a3c2b)
++++ app/src/main/java/com/example/joaofreitas/testeroomfinal/activity/ui/ListPedidoActivity.kt	(date 1537201659611)
+@@ -1,22 +1,23 @@
+ package com.example.joaofreitas.testeroomfinal.activity.ui
+ 
+ 
+-import com.example.joaofreitas.testeroomfinal.R
+-import com.example.joaofreitas.testeroomfinal.activity.recyclerview.PedidoListAdapter
+-import com.example.joaofreitas.testeroomfinal.dao.PedidoDao
+-import com.example.joaofreitas.testeroomfinal.database.AppDatabase
+-import com.example.joaofreitas.testeroomfinal.database.Database
+ import android.arch.lifecycle.Observer
+ import android.content.Intent
+ import android.os.Bundle
+-import android.support.v7.app.AppCompatActivity
++import br.com.maximasistemas.arch.mvp.view.MvpListaView
++import br.com.maximasistemas.arch.mvp.view.activities.MvpListaActivity
++import com.example.joaofreitas.testeroomfinal.R
++import com.example.joaofreitas.testeroomfinal.activity.recyclerview.PedidoListAdapter
+ import com.example.joaofreitas.testeroomfinal.model.Pedido
++import com.example.joaofreitas.testeroomfinal.presenter.ListPresenter
++import com.example.joaofreitas.testeroomfinal.utilities.InjectorUtil
+ import kotlinx.android.synthetic.main.activity_list_pedido.*
+ 
+-class ListPedidoActivity : AppCompatActivity() {
+ 
+-	private lateinit var pedidoDao: PedidoDao
+-	private lateinit var adapter: PedidoListAdapter
++class ListPedidoActivity : MvpListaActivity<ListPedidoView, ListPresenter>() {
++
++	override fun obterClassePresenter(): Class<ListPresenter> = ListPresenter::class.java
++	private val pedidoRepository = InjectorUtil.getPedidoRepository(this)
+ 
+ 	companion object {
+ 		const val TITLE_APPBAR = "Pedido"
+@@ -26,15 +27,19 @@
+ 		super.onCreate(savedInstanceState)
+ 		setContentView(R.layout.activity_list_pedido)
+ 		title = TITLE_APPBAR
+-		val database: AppDatabase = Database.getInstance(this)
+-		pedidoDao = database.pedidoDao()
++
++		//INSTANCIA DATABASE
++//		val database: AppDatabase = Database.getInstance(this)
++//		pedidoDao = database.pedidoDao()
++
+ 		configuraRecyclerView()
+-		configureLiveData()
++		configuraLiveData()
+ 		configuraBotaoFazerPedido()
++		adapter = presenter().obtemAdpterConfigurado(pedidoRepository)
+ 	}
+ 
+-	private fun configureLiveData() {
+-		val pedidosLiveData = pedidoDao.all()
++	private fun configuraLiveData() {
++		val pedidosLiveData = pedidoRepository.obtemTodosPedidos()
+ 		pedidosLiveData.observe(this, Observer { pedidos ->
+ 			pedidos?.let {
+ 				adapter.alteraTodosPedidos(it)
+@@ -61,4 +66,9 @@
+ 			startActivity(abreFormularioPedido)
+ 		}
+ 	}
++
+ }
++
++interface ListPedidoView : MvpListaView {
++
++}
+\ No newline at end of file
+Index: app/src/main/java/com/example/joaofreitas/testeroomfinal/presenter/ListPresenter.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/joaofreitas/testeroomfinal/presenter/ListPresenter.kt	(date 1537196376521)
++++ app/src/main/java/com/example/joaofreitas/testeroomfinal/presenter/ListPresenter.kt	(date 1537196376521)
+@@ -0,0 +1,26 @@
++package com.example.joaofreitas.testeroomfinal.presenter
++
++import android.arch.lifecycle.Observer
++import br.com.maximasistemas.arch.mvp.presenter.MvpListaPresenter
++import br.com.maximasistemas.arch.mvp.view.adapters.RecyclerViewAdapter
++import com.example.joaofreitas.testeroomfinal.activity.recyclerview.PedidoListAdapter
++import com.example.joaofreitas.testeroomfinal.activity.ui.ListPedidoView
++import com.example.joaofreitas.testeroomfinal.repository.PedidoRepository
++
++class ListPresenter : MvpListaPresenter<ListPedidoView>() {
++
++	override fun iniciar() {
++		super.iniciar()
++		carregaPedidos()
++	}
++
++	private fun configuraLiveData(pedidoRepository: PedidoRepository) {
++		val pedidosLiveData = pedidoRepository.obtemTodosPedidos()
++		pedidosLiveData.observe(this, Observer { pedidos ->
++			pedidos?.let {
++				adapter.alteraTodosPedidos(it)
++			}
++		})
++	}
++
++}
+\ No newline at end of file
+Index: app/src/main/java/com/example/joaofreitas/testeroomfinal/repository/ItemRepository.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/joaofreitas/testeroomfinal/repository/ItemRepository.kt	(date 1537196163522)
++++ app/src/main/java/com/example/joaofreitas/testeroomfinal/repository/ItemRepository.kt	(date 1537196163522)
+@@ -0,0 +1,23 @@
++package com.example.joaofreitas.testeroomfinal.repository
++
++import com.example.joaofreitas.testeroomfinal.dao.ItemDao
++import com.example.joaofreitas.testeroomfinal.model.Item
++
++class ItemRepository private constructor(private val itemDao: ItemDao) {
++
++	fun obtemTodosPedidos() = itemDao.all()
++
++	fun adicionaPedido(item: Item) = itemDao.add(item)
++
++	fun deletaPedido(item: Item) = itemDao.delete(item)
++
++	companion object {
++		@Volatile
++		private var instance: ItemRepository? = null
++
++		fun getInstance(itemDao: ItemDao) =
++				instance ?: synchronized(this) {
++					instance ?: ItemRepository(itemDao).also { instance = it }
++				}
++	}
++}
+\ No newline at end of file
+Index: app/src/main/java/com/example/joaofreitas/testeroomfinal/repository/PedidoRepository.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/joaofreitas/testeroomfinal/repository/PedidoRepository.kt	(date 1537194938503)
++++ app/src/main/java/com/example/joaofreitas/testeroomfinal/repository/PedidoRepository.kt	(date 1537194938503)
+@@ -0,0 +1,23 @@
++package com.example.joaofreitas.testeroomfinal.repository
++
++import com.example.joaofreitas.testeroomfinal.dao.PedidoDao
++import com.example.joaofreitas.testeroomfinal.model.Pedido
++
++class PedidoRepository private constructor(private val pedidoDao: PedidoDao) {
++
++	fun obtemTodosPedidos() = pedidoDao.all()
++
++	fun adicionaPedido(pedido: Pedido) = pedidoDao.add(pedido)
++
++	fun deletaPedido(pedido: Pedido) = pedidoDao.delete(pedido)
++
++	companion object {
++		@Volatile
++		private var instance: PedidoRepository? = null
++
++		fun getInstance(pedidoDao: PedidoDao) =
++				instance ?: synchronized(this) {
++					instance ?: PedidoRepository(pedidoDao).also { instance = it }
++				}
++	}
++}
+\ No newline at end of file
+Index: app/src/main/java/com/example/joaofreitas/testeroomfinal/utilities/InjectorUtil.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/joaofreitas/testeroomfinal/utilities/InjectorUtil.kt	(date 1537194938503)
++++ app/src/main/java/com/example/joaofreitas/testeroomfinal/utilities/InjectorUtil.kt	(date 1537194938503)
+@@ -0,0 +1,17 @@
++package com.example.joaofreitas.testeroomfinal.utilities
++
++import android.content.Context
++import com.example.joaofreitas.testeroomfinal.database.Database
++import com.example.joaofreitas.testeroomfinal.repository.ItemRepository
++import com.example.joaofreitas.testeroomfinal.repository.PedidoRepository
++
++object InjectorUtil {
++
++	fun getPedidoRepository(context: Context) : PedidoRepository {
++		return PedidoRepository.getInstance(Database.getInstance(context).pedidoDao())
++	}
++
++	fun getItemRepository(context: Context) : ItemRepository {
++		return ItemRepository.getInstance(Database.getInstance(context).itemDao())
++	}
++}
+\ No newline at end of file

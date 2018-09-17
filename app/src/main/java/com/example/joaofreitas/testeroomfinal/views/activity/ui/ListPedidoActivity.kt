@@ -1,59 +1,49 @@
 package com.example.joaofreitas.testeroomfinal.views.activity.ui
 
 
+import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.Observer
 import android.content.Intent
 import android.os.Bundle
 import br.com.maximasistemas.arch.mvp.view.MvpListaView
 import br.com.maximasistemas.arch.mvp.view.activities.MvpListaActivity
 import com.example.joaofreitas.testeroomfinal.R
-import com.example.joaofreitas.testeroomfinal.dao.PedidoDao
-import com.example.joaofreitas.testeroomfinal.database.AppDatabase
-import com.example.joaofreitas.testeroomfinal.database.Database
 import com.example.joaofreitas.testeroomfinal.model.Pedido
-import com.example.joaofreitas.testeroomfinal.presenter.ListPresenter
-import com.example.joaofreitas.testeroomfinal.repository.PedidoRepository
+import com.example.joaofreitas.testeroomfinal.presenter.ListPedidoPresenter
 import com.example.joaofreitas.testeroomfinal.utilities.InjectorUtil
 import com.example.joaofreitas.testeroomfinal.views.activity.recyclerview.PedidoListAdapter
 import kotlinx.android.synthetic.main.activity_list_pedido.*
 
-class ListPedidoActivity : MvpListaActivity<ListPedidoView, ListPresenter>() {
-	override fun obterClassePresenter(): Class<ListPresenter> = ListPresenter::class.java
-	//TODO aplicar injeção de depdência conforme projeto sunflower
-	private lateinit var pedidoDao: PedidoDao
-	private val pedidoRepository = InjectorUtil.getItemRepository()
+class ListPedidoActivity : MvpListaActivity<ListPedidoView, ListPedidoPresenter>() {
+
+	override fun obterClassePresenter(): Class<ListPedidoPresenter> = ListPedidoPresenter::class.java
+
+	private val pedidoRepository = InjectorUtil.getPedidoRepository(this)
 
 	companion object {
 		const val TITLE_APPBAR = "Pedido"
 	}
 
 	override fun onCreate(savedInstanceState: Bundle?) {
-		super.onCreate(savedInstanceState)
 
+		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_list_pedido)
 		title = TITLE_APPBAR
-		val database: AppDatabase = Database.getInstance(this)
-		pedidoDao = database.pedidoDao()
-		configuraRecyclerView()
-		configureLiveData()
+
+		parent
+		adapter = PedidoListAdapter { pedido -> vaiParaDetalhesPedido(pedido) }
+		configureLiveData(adapter as PedidoListAdapter)
 		configuraBotaoFazerPedido()
-		adapter = PedidoListAdapter()
 	}
 
-	private fun configureLiveData() {
-		val pedidosLiveData = pedidoDao.all()
+
+	private fun configureLiveData(adapter: PedidoListAdapter) {
+		val pedidosLiveData = pedidoRepository.obtemPedidos()
 		pedidosLiveData.observe(this, Observer { pedidos ->
 			pedidos?.let {
 				adapter.alteraTodosPedidos(it)
 			}
 		})
-	}
-
-	private fun configuraRecyclerView() {
-		this.adapter = PedidoListAdapter() {
-			vaiParaDetalhesPedido(it)
-		}
-		list_pedido_recycler_view.adapter = adapter
 	}
 
 	private fun vaiParaDetalhesPedido(pedido: Pedido) {
@@ -71,5 +61,5 @@ class ListPedidoActivity : MvpListaActivity<ListPedidoView, ListPresenter>() {
 }
 
 interface ListPedidoView : MvpListaView {
-
+	fun exibirAlgumaCoisa()
 }

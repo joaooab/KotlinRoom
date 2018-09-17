@@ -6,17 +6,11 @@
 	android:layout_height="match_parent"
 	tools:context=".views.activity.ui.ListPedidoActivity">
 
-	<android.support.v7.widget.RecyclerView
-		android:id="@+id/list_pedido_recycler_view"
-		android:layout_width="0dp"
-		android:layout_height="0dp"
-		android:layout_margin="8dp"
-		app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-		app:layout_constraintBottom_toBottomOf="parent"
-		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toTopOf="parent"
-		tools:listitem="@layout/pedido_item" />
+	<include
+		android:id="@+id/activityPrincipalIclLista"
+		layout="@layout/include_lista"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent" />
 
 	<android.support.design.widget.FloatingActionButton
 		android:id="@+id/list_pedido_add_pedido"

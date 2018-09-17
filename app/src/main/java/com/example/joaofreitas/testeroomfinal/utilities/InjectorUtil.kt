@@ -7,11 +7,11 @@ import com.example.joaofreitas.testeroomfinal.repository.PedidoRepository
 
 object InjectorUtil {
 
-	private fun getPedidoRepository(context: Context) : PedidoRepository {
+	fun getPedidoRepository(context: Context) : PedidoRepository {
 		return PedidoRepository.getInstance(Database.getInstance(context).pedidoDao())
 	}
 
-	private fun getItemRepository(context: Context) : ItemRepository {
+	fun getItemRepository(context: Context) : ItemRepository {
 		return ItemRepository.getInstance(Database.getInstance(context).itemDao())
 	}
 }
