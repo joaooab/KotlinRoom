@@ -1,11 +1,11 @@
-package com.example.joaofreitas.testeroomfinal.views.activity.recyclerview
+package com.example.joaofreitas.testeroomfinal.ui.pedido.list
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import br.com.maximasistemas.arch.mvp.view.adapters.RecyclerViewAdapter
 import com.example.joaofreitas.testeroomfinal.R
-import com.example.joaofreitas.testeroomfinal.model.Pedido
+import com.example.joaofreitas.testeroomfinal.data.repository.pedido.Pedido
 import kotlinx.android.synthetic.main.pedido_item.view.*
 
 class PedidoListAdapter(var onClick: (Pedido) -> Unit = {}) : RecyclerViewAdapter<Pedido, PedidoListAdapter.ViewHolder>() {
@@ -18,17 +18,17 @@ class PedidoListAdapter(var onClick: (Pedido) -> Unit = {}) : RecyclerViewAdapte
 		holder.bindView(lista[position] as Pedido)
 		holder.itemView.setOnClickListener { onClick(lista[position] as Pedido)}
 	}
-//
+
 //	fun add(products: List<Pedido>) {
 //		this.lista.addAll(products)
 //		notifyItemRangeInserted(0, products.size)
 //	}
-
-	fun alteraTodosPedidos(pedidos: List<Pedido>) {
-		this.lista.clear()
-		this.lista.addAll(pedidos)
-		notifyDataSetChanged()
-	}
+//
+//	fun alteraTodosPedidos(pedidos: List<Pedido>) {
+//		this.lista.clear()
+//		this.lista.addAll(pedidos)
+//		notifyDataSetChanged()
+//	}
 
 	inner class ViewHolder(itemView: View) : RecyclerViewAdapter.ViewHolder<Pedido>(itemView) {
 		override fun bindView(item: Pedido) {

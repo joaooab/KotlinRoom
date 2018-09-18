@@ -1,15 +1,15 @@
-package com.example.joaofreitas.testeroomfinal.views.activity.ui
+package com.example.joaofreitas.testeroomfinal.ui.item.formulario
 
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.example.joaofreitas.testeroomfinal.R
-import com.example.joaofreitas.testeroomfinal.dao.ItemDao
-import com.example.joaofreitas.testeroomfinal.database.Database
-import com.example.joaofreitas.testeroomfinal.model.Item
-import com.example.joaofreitas.testeroomfinal.model.Pedido
+import com.example.joaofreitas.testeroomfinal.data.repository.item.ItemDao
+import com.example.joaofreitas.testeroomfinal.data.Database
+import com.example.joaofreitas.testeroomfinal.data.repository.item.Item
+import com.example.joaofreitas.testeroomfinal.data.repository.pedido.Pedido
+import com.example.joaofreitas.testeroomfinal.ui.pedido.CHAVE_PEDIDO
 import kotlinx.android.synthetic.main.activity_formulario_item.*
-import kotlinx.android.synthetic.main.activity_pedido_detalhes.*
 
 class FormularioItemActivity : AppCompatActivity() {
 

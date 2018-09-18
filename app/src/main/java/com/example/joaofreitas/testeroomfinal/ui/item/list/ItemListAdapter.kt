@@ -1,4 +1,4 @@
-package com.example.joaofreitas.testeroomfinal.views.activity.recyclerview
+package com.example.joaofreitas.testeroomfinal.ui.item.list
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
@@ -6,8 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.joaofreitas.testeroomfinal.R
-import com.example.joaofreitas.testeroomfinal.model.Item
-import com.example.joaofreitas.testeroomfinal.model.Pedido
+import com.example.joaofreitas.testeroomfinal.data.repository.item.Item
 import kotlinx.android.synthetic.main.item.view.*
 
 class ItemListAdapter(private val itens: MutableList<Item> = mutableListOf(),

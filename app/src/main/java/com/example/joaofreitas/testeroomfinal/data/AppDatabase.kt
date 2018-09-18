@@ -1,24 +1,23 @@
-package com.example.joaofreitas.testeroomfinal.database
+package com.example.joaofreitas.testeroomfinal.data
 
 import android.arch.persistence.room.Database
 import android.arch.persistence.room.Room
 import android.arch.persistence.room.RoomDatabase
 import android.content.Context
-import com.example.joaofreitas.testeroomfinal.dao.ItemDao
-import com.example.joaofreitas.testeroomfinal.dao.PedidoDao
-import com.example.joaofreitas.testeroomfinal.migration.Migration1To2
-import com.example.joaofreitas.testeroomfinal.model.Item
-import com.example.joaofreitas.testeroomfinal.model.Pedido
+import com.example.joaofreitas.testeroomfinal.data.repository.item.ItemDao
+import com.example.joaofreitas.testeroomfinal.data.repository.pedido.PedidoDao
+import com.example.joaofreitas.testeroomfinal.data.repository.item.Item
+import com.example.joaofreitas.testeroomfinal.data.repository.pedido.Pedido
 
 @Database(entities = [(Pedido::class), (Item::class)], version = 3, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 	abstract fun pedidoDao(): PedidoDao
 	abstract fun itemDao(): ItemDao
 
-	companion object {
-		@JvmField
-		val MIGRATION_1_2 = Migration1To2()
-	}
+//	companion object {
+//		@JvmField
+//		val MIGRATION_1_2 = Migration1To2()
+//	}
 }
 
 object Database {

@@ -1,7 +1,7 @@
-package com.example.joaofreitas.testeroomfinal.repository
+package com.example.joaofreitas.testeroomfinal.data.repository.item
 
-import com.example.joaofreitas.testeroomfinal.dao.ItemDao
-import com.example.joaofreitas.testeroomfinal.model.Item
+//TODO testar @Singleton
+//TODO criar interface
 
 class ItemRepository private constructor(private val itemDao: ItemDao) {
 	fun obtemItem() = itemDao.all()
@@ -15,8 +15,10 @@ class ItemRepository private constructor(private val itemDao: ItemDao) {
 		private var instance: ItemRepository? = null
 
 		fun getInstance(itemDao: ItemDao) =
-				instance ?: synchronized(this) {
-					instance ?: ItemRepository(itemDao).also { instance = it }
+				instance
+						?: synchronized(this) {
+					instance
+							?: ItemRepository(itemDao).also { instance = it }
 				}
 	}
 }
