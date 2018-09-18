@@ -1,5 +1,6 @@
 package com.example.joaofreitas.testeroomfinal.ui.pedido.list
 
+import android.arch.lifecycle.LiveData
 import br.com.maximasistemas.arch.mvp.presenter.MvpListaPresenter
 import com.example.joaofreitas.testeroomfinal.data.repository.pedido.Pedido
 import com.example.joaofreitas.testeroomfinal.data.repository.pedido.PedidoRepository
@@ -18,7 +19,7 @@ class ListPedidoPresenter : MvpListaPresenter<ListPedidoView>() {
 
 	private fun obterRepository() = view?.obterRepository()
 
-	private fun consultarPedidos(repository: PedidoRepository?) {
+	fun consultarPedidos(repository: PedidoRepository?) {
 		if (repository == null) return
 
 		view?.mostrarCarregando()
@@ -36,7 +37,7 @@ class ListPedidoPresenter : MvpListaPresenter<ListPedidoView>() {
 		}
 	}
 
-//	fun obtemPedidos(): LiveData<List<Pedido>>? {
-//		return obterRepository()?.obtemPedidosLiveData()
-//	}
+	fun obtemPedidosLiveData(): LiveData<List<Pedido>>? {
+		return obterRepository()?.obtemPedidosLiveData()
+	}
 }
