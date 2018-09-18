@@ -14,3 +14,6 @@ Injeção de Dependência baseada no conceito de Inversão de Controle. O que di
 
 
 Se uma classe java criar uma instância de outra classe através do operador new, ela não poderá ser usada e testada independentemente dessa classe e será chamada de dependência hard.
+
+
+A vantagem mais importante é que aumenta a possibilidade de reutilizar a classe e poder testá-las independentemente de outras classes.
