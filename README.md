@@ -17,3 +17,8 @@ Se uma classe java criar uma instância de outra classe através do operador new
 
 
 A vantagem mais importante é que aumenta a possibilidade de reutilizar a classe e poder testá-las independentemente de outras classes.
+
+Limitações do Dagger2:
+Dagger2 não insere campos automaticamente.
+Não pode injetar campos privados.
+Se você quiser usar a injeção de campo, você deve definir um método na sua @Componentinterface anotada que tome a instância da classe na qual você deseja injetar a variável de membro.
