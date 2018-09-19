@@ -24,6 +24,7 @@ class ListPedidoAdapter(var onClick: (Pedido) -> Unit = {}) : RecyclerViewAdapte
 //		notifyItemRangeInserted(0, products.size)
 //	}
 //
+	//TODO tirar clear
 	fun alteraTodosPedidos(pedidos: List<Pedido>) {
 		this.lista.clear()
 		this.lista.addAll(pedidos)

@@ -31,7 +31,7 @@ class ListPedidoPresenter : MvpListaPresenter<ListPedidoView>() {
 		doAsync {
 			pedidos = repository.obtemPedidos() as MutableList<Pedido>
 			uiThread {
-				processarTela()
+				processarTela(pedidos)
 			}
 		}
 	}
