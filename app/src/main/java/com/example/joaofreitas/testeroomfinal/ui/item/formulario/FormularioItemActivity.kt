@@ -4,13 +4,14 @@ import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.example.joaofreitas.testeroomfinal.R
-import com.example.joaofreitas.testeroomfinal.data.repository.item.ItemDao
-import com.example.joaofreitas.testeroomfinal.data.Database
-import com.example.joaofreitas.testeroomfinal.data.repository.item.Item
-import com.example.joaofreitas.testeroomfinal.data.repository.pedido.Pedido
+import com.example.joaofreitas.testeroomfinal.data.local.repository.item.ItemDao
+import com.example.joaofreitas.testeroomfinal.data.local.Database
+import com.example.joaofreitas.testeroomfinal.data.local.repository.item.Item
+import com.example.joaofreitas.testeroomfinal.data.local.repository.pedido.Pedido
 import com.example.joaofreitas.testeroomfinal.ui.pedido.CHAVE_PEDIDO
 import kotlinx.android.synthetic.main.activity_formulario_item.*
 
+//TODO Refatorar
 class FormularioItemActivity : AppCompatActivity() {
 
 	private lateinit var itemDao: ItemDao

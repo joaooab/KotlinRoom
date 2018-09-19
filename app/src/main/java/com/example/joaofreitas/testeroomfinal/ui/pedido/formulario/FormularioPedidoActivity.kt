@@ -1,12 +1,11 @@
-package com.example.joaofreitas.testeroomfinal.views.activity.ui
+package com.example.joaofreitas.testeroomfinal.ui.pedido.formulario
 
 import android.os.AsyncTask
 import android.os.Bundle
 import br.com.maximasistemas.arch.mvp.view.activities.MvpActivity
 import com.example.joaofreitas.testeroomfinal.R
-import com.example.joaofreitas.testeroomfinal.data.repository.pedido.Pedido
-import com.example.joaofreitas.testeroomfinal.data.repository.pedido.PedidoRepository
-import com.example.joaofreitas.testeroomfinal.ui.pedido.formulario.FormularioPedidoPresenter
+import com.example.joaofreitas.testeroomfinal.data.local.repository.pedido.Pedido
+import com.example.joaofreitas.testeroomfinal.data.local.repository.pedido.PedidoRepository
 import kotlinx.android.synthetic.main.activity_formulario_pedido.*
 import org.koin.android.ext.android.inject
 
@@ -27,34 +26,19 @@ class FormularioPedidoActivity : MvpActivity<FormularioPedidoView, FormularioPed
 
 	private fun configuraBotaoSalvar() {
 		formulario_pedido_salvar.setOnClickListener {
-			//			val pedidoCriado = criaPedido()
-//			presenter().salvaPedido(pedidoCriado)
-			SalvaPedido().execute()
-		}
-	}
-
-
-	inner class SalvaPedido : AsyncTask<Void, Void, Void>() {
-		override fun doInBackground(vararg params: Void?): Void? {
 			val pedidoCriado = criaPedido()
-			pedidoRepository.adicionaPedido(pedidoCriado)
-			finish()
-			return null
+			presenter().salvaPedido(pedidoCriado)
 		}
-
-		private fun criaPedido(): Pedido {
-			val nome = formulario_pedido_nome.editText?.text.toString()
-			return Pedido(nome = nome)
-		}
-
 	}
 
-	override fun exibeDados() {
+	private fun criaPedido(): Pedido {
+		val nome = formulario_pedido_nome.editText?.text.toString()
+		return Pedido(nome = nome)
+	}
+
+	override fun finalizarTela() {
 		finish()
 	}
 }
 
-interface FormularioPedidoView {
-	fun obterRepository(): PedidoRepository
-	fun exibeDados()
-}
+

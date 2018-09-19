@@ -2,9 +2,8 @@ package com.example.joaofreitas.testeroomfinal.ui.pedido.list
 
 import android.arch.lifecycle.LiveData
 import br.com.maximasistemas.arch.mvp.presenter.MvpListaPresenter
-import com.example.joaofreitas.testeroomfinal.data.repository.pedido.Pedido
-import com.example.joaofreitas.testeroomfinal.data.repository.pedido.PedidoRepository
-import kotlinx.coroutines.experimental.launch
+import com.example.joaofreitas.testeroomfinal.data.local.repository.pedido.Pedido
+import com.example.joaofreitas.testeroomfinal.data.local.repository.pedido.PedidoRepository
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
@@ -32,7 +31,7 @@ class ListPedidoPresenter : MvpListaPresenter<ListPedidoView>() {
 		doAsync {
 			pedidos = repository.obtemPedidos() as MutableList<Pedido>
 			uiThread {
-				processarTela(pedidos)
+				processarTela()
 			}
 		}
 	}

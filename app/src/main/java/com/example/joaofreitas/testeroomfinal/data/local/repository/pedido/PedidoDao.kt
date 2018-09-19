@@ -1,4 +1,4 @@
-package com.example.joaofreitas.testeroomfinal.data.repository.pedido
+package com.example.joaofreitas.testeroomfinal.data.local.repository.pedido
 
 import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.Dao

@@ -1,4 +1,4 @@
-package com.example.joaofreitas.testeroomfinal.data.repository.item
+package com.example.joaofreitas.testeroomfinal.data.local.repository.item
 
 import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.Dao
@@ -13,7 +13,10 @@ interface ItemDao {
 	fun all(): LiveData<List<Item>>
 
 	@Query("SELECT * FROM item WHERE pedidoId =:id ")
-	fun allByPedidoId(id: Long): LiveData<List<Item>>
+	fun allByLiveDataPedidoId(id: Long): LiveData<List<Item>>
+
+	@Query("SELECT * FROM item WHERE pedidoId =:id ")
+	fun allByPedidoId(id: Long): List<Item>
 
 	@Insert
 	fun add(vararg pedido: Item)

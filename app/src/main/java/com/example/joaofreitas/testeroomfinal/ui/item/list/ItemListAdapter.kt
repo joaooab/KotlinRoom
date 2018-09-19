@@ -6,9 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.joaofreitas.testeroomfinal.R
-import com.example.joaofreitas.testeroomfinal.data.repository.item.Item
+import com.example.joaofreitas.testeroomfinal.data.local.repository.item.Item
 import kotlinx.android.synthetic.main.item.view.*
 
+//TODO Refatorar
 class ItemListAdapter(private val itens: MutableList<Item> = mutableListOf(),
                       private val context: Context) : RecyclerView.Adapter<ItemListAdapter.ViewHolder>() {
 

@@ -1,7 +1,4 @@
-package com.example.joaofreitas.testeroomfinal.migration
-
-import android.arch.persistence.db.SupportSQLiteDatabase
-import android.arch.persistence.room.migration.Migration
+package com.example.joaofreitas.testeroomfinal.data.local.migration
 
 //class Migration1To2 : Migration(2, 3) {
 //	override fun migrate(database: SupportSQLiteDatabase) {

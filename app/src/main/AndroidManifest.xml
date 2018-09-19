@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	package="com.example.joaofreitas.testeroomfinal">
 
+	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
 	<application
 		android:name=".di.MainApplication"
 		android:allowBackup="true"
@@ -18,7 +21,7 @@
 			</intent-filter>
 		</activity>
 		<activity android:name=".ui.pedido.formulario.FormularioPedidoActivity" />
-		<activity android:name=".ui.pedido.detalhes.PedidoDetalhesActivity" />
+		<activity android:name=".ui.pedido.detalhes.DetalhesPedidoActivity" />
 		<activity android:name=".ui.item.formulario.FormularioItemActivity" />
 	</application>
 

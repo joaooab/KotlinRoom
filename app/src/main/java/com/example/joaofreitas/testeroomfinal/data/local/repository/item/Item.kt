@@ -1,10 +1,10 @@
-package com.example.joaofreitas.testeroomfinal.data.repository.item
+package com.example.joaofreitas.testeroomfinal.data.local.repository.item
 
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.ForeignKey
 import android.arch.persistence.room.PrimaryKey
 import android.os.Parcelable
-import com.example.joaofreitas.testeroomfinal.data.repository.pedido.Pedido
+import com.example.joaofreitas.testeroomfinal.data.local.repository.pedido.Pedido
 import kotlinx.android.parcel.Parcelize
 
 @Entity
