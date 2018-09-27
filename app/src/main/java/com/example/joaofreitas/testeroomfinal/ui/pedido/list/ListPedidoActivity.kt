@@ -1,21 +1,20 @@
 package com.example.joaofreitas.testeroomfinal.ui.pedido.list
 
 import android.arch.lifecycle.Observer
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import br.com.maximasistemas.arch.mvp.view.activities.MvpListaActivity
 import br.com.maximasistemas.arch.mvp.view.adapters.RecyclerViewAdapter
 import com.example.joaofreitas.testeroomfinal.R
 import com.example.joaofreitas.testeroomfinal.data.local.repository.pedido.PedidoRepository
-import com.example.joaofreitas.testeroomfinal.data.remoto.RetrofitInitializer
+import com.example.joaofreitas.testeroomfinal.data.remoto.conexao.ConexaoService
+import com.example.joaofreitas.testeroomfinal.data.remoto.datamanager.DataManagerService
 import com.example.joaofreitas.testeroomfinal.ui.pedido.detalhes.DetalhesPedidoActivity
 import com.example.joaofreitas.testeroomfinal.ui.pedido.formulario.FormularioPedidoActivity
 import kotlinx.android.synthetic.main.activity_list_pedido.*
+import org.jetbrains.anko.startActivity
 import org.koin.android.ext.android.inject
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class ListPedidoActivity : MvpListaActivity<ListPedidoView, ListPedidoPresenter>(), ListPedidoView {
 
@@ -27,14 +26,10 @@ class ListPedidoActivity : MvpListaActivity<ListPedidoView, ListPedidoPresenter>
 
 	override fun obterClassePresenter(): Class<ListPedidoPresenter> = ListPedidoPresenter::class.java
 
-	override fun obterRepository(): PedidoRepository = pedidoRepository
-
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_list_pedido)
 		title = TITLE_APPBAR
-
-//		retrofitInitilaizer()
 
 		adapter = configureAdapter()
 		configuraBotaoFazerPedido()
@@ -46,6 +41,7 @@ class ListPedidoActivity : MvpListaActivity<ListPedidoView, ListPedidoPresenter>
 		return configureLiveData(listPedidoAdapter)
 	}
 
+	//	TODO transferir configuração liveData para MVP
 	private fun configureLiveData(listPedidoAdapter: ListPedidoAdapter): RecyclerViewAdapter<*, *> {
 		val liveData = pedidoRepository.obtemPedidosLiveData()
 		liveData.observe(this, Observer { pedidos ->
@@ -58,25 +54,26 @@ class ListPedidoActivity : MvpListaActivity<ListPedidoView, ListPedidoPresenter>
 
 	private fun configuraBotaoFazerPedido() {
 		list_pedido_add_pedido.setOnClickListener {
-			val abreFormularioPedido = Intent(this, FormularioPedidoActivity::class.java)
-			startActivity(abreFormularioPedido)
+			startActivity<FormularioPedidoActivity>()
 		}
 	}
 
-
-	private fun retrofitInitilaizer() {
-		val call = RetrofitInitializer().retrofitService().list()
-		call.enqueue(object : Callback<List<*>?> {
-			override fun onFailure(call: Call<List<*>?>?, t: Throwable?) {
-				Log.e("onFailure error", t?.message)
-			}
-
-			override fun onResponse(call: Call<List<*>?>?, response: Response<List<*>?>?) {
-				response?.body()?.let {
-					val teste: List<*> = it
-				}
-			}
-		})
+	override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+		val inflater = menuInflater
+		inflater.inflate(R.menu.menu_list_pedido, menu)
+		return super.onCreateOptionsMenu(menu)
 	}
+
+	override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+		when (item?.itemId) {
+			R.id.action_web_service -> {
+				val conexaoService = ConexaoService()
+				conexaoService.login()
+				return true
+			}
+		}
+		return super.onOptionsItemSelected(item)
+	}
+
 }
 

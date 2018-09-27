@@ -1,25 +1,24 @@
 package com.example.joaofreitas.testeroomfinal.ui.pedido.list
 
-import android.arch.lifecycle.LiveData
 import br.com.maximasistemas.arch.mvp.presenter.MvpListaPresenter
 import com.example.joaofreitas.testeroomfinal.data.local.repository.pedido.Pedido
 import com.example.joaofreitas.testeroomfinal.data.local.repository.pedido.PedidoRepository
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
+import org.koin.standalone.KoinComponent
+import org.koin.standalone.inject
 
-class ListPedidoPresenter : MvpListaPresenter<ListPedidoView>() {
+class ListPedidoPresenter : MvpListaPresenter<ListPedidoView>(), KoinComponent {
 
+	private val pedidoRepository: PedidoRepository by inject()
 	var pedidos = mutableListOf<Pedido>()
 
 	override fun iniciar() {
 		super.iniciar()
-		consultarPedidos(obterRepository())
+		consultarPedidos()
 	}
 
-	private fun obterRepository() = view?.obterRepository()
-
-	fun consultarPedidos(repository: PedidoRepository?) {
-		if (repository == null) return
+	fun consultarPedidos() {
 
 		view?.mostrarCarregando()
 
@@ -29,14 +28,21 @@ class ListPedidoPresenter : MvpListaPresenter<ListPedidoView>() {
 		}
 
 		doAsync {
-			pedidos = repository.obtemPedidos() as MutableList<Pedido>
+			pedidos = pedidoRepository.obtemPedidos() as MutableList<Pedido>
 			uiThread {
 				processarTela(pedidos)
 			}
 		}
 	}
 
-	fun obtemPedidosLiveData(): LiveData<List<Pedido>>? {
-		return obterRepository()?.obtemPedidosLiveData()
-	}
+//	private fun configureLiveData(listPedidoAdapter: ListPedidoAdapter): RecyclerViewAdapter<*, *> {
+//		val liveData = pedidoRepository.obtemPedidosLiveData()
+//		liveData.observe(, Observer { pedidos ->
+//			pedidos?.let {
+//				listPedidoAdapter.alteraTodosPedidos(it)
+//			}
+//		})
+//		return listPedidoAdapter
+//	}
+
 }

@@ -6,10 +6,12 @@ import com.example.joaofreitas.testeroomfinal.data.local.repository.item.ItemRep
 import com.example.joaofreitas.testeroomfinal.data.local.repository.item.ItemRepositoryImpl
 import com.example.joaofreitas.testeroomfinal.data.local.repository.pedido.PedidoRepository
 import com.example.joaofreitas.testeroomfinal.data.local.repository.pedido.PedidoRepositoryImpl
+import com.example.joaofreitas.testeroomfinal.data.remoto.conexao.ConexaoClient
+import com.example.joaofreitas.testeroomfinal.data.remoto.conexao.ConexaoClientRepository
+import com.example.joaofreitas.testeroomfinal.data.remoto.datamanager.DataManagerClient
+import com.example.joaofreitas.testeroomfinal.data.remoto.datamanager.DataMangerClientRepository
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module.module
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 val appModule = module {
 
@@ -23,11 +25,14 @@ val appModule = module {
 				.build()
 	}
 
-
 	single<PedidoRepository> { PedidoRepositoryImpl(get()) }
 	single { get<AppDatabase>().pedidoDao() }
 
 	single<ItemRepository> { ItemRepositoryImpl(get()) }
 	single { get<AppDatabase>().itemDao() }
+
+	single<ConexaoClientRepository> { ConexaoClient() }
+
+	single<DataMangerClientRepository> { DataManagerClient() }
 
 }

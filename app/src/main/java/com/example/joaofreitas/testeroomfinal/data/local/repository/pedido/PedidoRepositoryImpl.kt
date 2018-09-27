@@ -2,7 +2,6 @@ package com.example.joaofreitas.testeroomfinal.data.local.repository.pedido
 
 import javax.inject.Singleton
 
-//TODO testar @Singleton
 class PedidoRepositoryImpl @Singleton constructor(private val pedidoDao: PedidoDao) : PedidoRepository {
 
 	override fun obtemPedidosLiveData() = pedidoDao.allLiveData()

@@ -3,8 +3,6 @@ package com.example.joaofreitas.testeroomfinal.data.local.repository.item
 import javax.inject.Singleton
 
 //TODO testar @Singleton
-//TODO criar interface
-
 class ItemRepositoryImpl @Singleton constructor(private val itemDao: ItemDao) : ItemRepository {
 
 	override fun obtemItensLiveData() = itemDao.all()

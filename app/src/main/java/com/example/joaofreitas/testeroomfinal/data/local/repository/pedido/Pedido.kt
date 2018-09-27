@@ -7,8 +7,8 @@ import kotlinx.android.parcel.Parcelize
 
 @Entity
 @Parcelize
-class Pedido(
+data class Pedido(
 		@PrimaryKey(autoGenerate = true)
 		val id: Long = 0,
 		val nome: String,
-		val total: Float = 0F) : Parcelable
+ 		val total: Float = 0F) : Parcelable
