@@ -24,7 +24,7 @@ class ItemListAdapter(private val itens: MutableList<Item> = mutableListOf(),
 
 	override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 		val item = itens[position]
-		holder.bind(item)
+		holder.bind(item )
 	}
 
 	fun add(itens: List<Item>) {
