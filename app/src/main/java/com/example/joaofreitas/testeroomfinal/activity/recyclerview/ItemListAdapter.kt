@@ -27,7 +27,7 @@ class ItemListAdapter(private val itens: MutableList<Item> = mutableListOf(),
 		holder.bind(item )
 	}
 
-	fun add(itens: List<Item>) {
+	fun add(itens:List<Item>) {
 		this.itens.addAll(itens)
 		notifyItemRangeInserted(0, itens.size)
 	}
